@@ -12,6 +12,10 @@ class UsersController < ApplicationController
         #save image whenever its a login - since they can expire
         user.providerImage = auth['info']['Providerimage']
         token = encode_token(user_id: user.id)
+
+        redirect_to('http://localhost:3001/#/' + "?token=#{token}")
+      else
+        render json: { error: 'failed to create/find user' }, status: :not_acceptable
       end
   end
 
