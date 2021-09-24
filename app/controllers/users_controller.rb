@@ -13,6 +13,8 @@ class UsersController < ApplicationController
         user.providerImage = auth['info']['Providerimage']
         token = encode_token(user_id: user.id)
 
+        # render json: { token: token }
+
         redirect_to('http://localhost:3001/#/' + "?token=#{token}")
       else
         render json: { error: 'failed to create/find user' }, status: :not_acceptable
