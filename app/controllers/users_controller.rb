@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
         # render json: { token: token }
 
-        redirect_to('http://localhost:3001/#/' + "?token=#{token}")
+        redirect_to('http://localhost:3001/#/' + "?token=#{token}"+ "&user_id=#{user.id}")
       else
         render json: { error: 'failed to create/find user' }, status: :not_acceptable
       end
