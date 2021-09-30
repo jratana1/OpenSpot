@@ -9,9 +9,25 @@ require 'faker'
 require "securerandom"
 
 # generate 20 users
+(1..40).each do |id|
+    User.create!(
+# each user is assigned an id from 1-20
+        name: Faker::Name.name,
+        username: Faker::App.name,
+        email: Faker::Internet.email,
+        phone_number: Faker::PhoneNumber.cell_phone,
+    )
+end
+
 (1..20).each do |id|
     Restaurant.create!(
 # each user is assigned an id from 1-20
         name: Faker::Restaurant.name,
+        city: "Philadelphia",
+        state: "PA",
+        phone_number: Faker::PhoneNumber.cell_phone,
+        address: Faker::Address.street_address,
+        postal_code: Faker::Address.zip_code,
+        owner: User.find(id+3)
     )
 end
