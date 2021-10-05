@@ -5,5 +5,6 @@ class CreateLikes < ActiveRecord::Migration[6.0]
       t.integer :user_id
 
       t.timestamps
+    end
   end
 end
