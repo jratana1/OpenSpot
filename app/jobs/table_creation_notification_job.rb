@@ -18,7 +18,23 @@ class TableCreationNotificationJob < ApplicationJob
     queue_as :default
   
     def perform(table)
-      
+      restaurant = table.restaurant
+
+      params = {"app_id" => "#{ENV['ONESIGNAL_ID']}", 
+          "contents" => {"en" => "#{restaurant.name} has a table available at #{table.seating}.  Click to Purchase!"},
+          "channel_for_external_user_ids" => "push",
+          "include_external_user_ids" => ["1"]
+        }
+      uri = URI.parse('https://onesignal.com/api/v1/notifications')
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+
+      request = Net::HTTP::Post.new(uri.path,
+                                    'Content-Type'  => 'application/json;charset=utf-8',
+                                    'Authorization' => "Basic #{ENV['ONESIGNAL_API_KEY']}")
+      request.body = params.as_json.to_json
+      response = http.request(request)
+
     end
 
   end
