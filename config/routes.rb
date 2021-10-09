@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'users#index'
 
   get '/onesignal_auth_hash', to: 'sessions#onesignal_auth_hash'
-
+  post '/checkout', to: 'sessions#checkout'
 
   resources :tables
   resources :restaurants

@@ -8,6 +8,7 @@ gem 'omniauth-google-oauth2'
 gem 'jwt'
 gem 'dotenv-rails'
 gem 'faker'
+gem 'stripe'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.0.4', '>= 6.0.4.1'

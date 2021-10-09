@@ -23,7 +23,9 @@ class TableCreationNotificationJob < ApplicationJob
       params = {"app_id" => "#{ENV['ONESIGNAL_ID']}", 
           "contents" => {"en" => "#{restaurant.name} has a table available at #{table.seating}.  Click to Purchase!"},
           "channel_for_external_user_ids" => "push",
-          "include_external_user_ids" => ["1"]
+          # need to search all users that like the current restaurant
+          "include_external_user_ids" => restaurant.liking_users.ids,
+          "url" => "http://localhost:3001/#/checkout/#{table.id}"
         }
       uri = URI.parse('https://onesignal.com/api/v1/notifications')
       http = Net::HTTP.new(uri.host, uri.port)
