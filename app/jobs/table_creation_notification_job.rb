@@ -20,11 +20,12 @@ class TableCreationNotificationJob < ApplicationJob
     def perform(table)
       restaurant = table.restaurant
 
+
       params = {"app_id" => "#{ENV['ONESIGNAL_ID']}", 
           "contents" => {"en" => "#{restaurant.name} has a table available at #{table.seating}.  Click to Purchase!"},
           "channel_for_external_user_ids" => "push",
           # need to search all users that like the current restaurant
-          "include_external_user_ids" => restaurant.liking_users.ids,
+          "include_external_user_ids" => restaurant.liking_users.ids.map(&:to_s),
           "url" => "http://localhost:3001/#/checkout/#{table.id}"
         }
       uri = URI.parse('https://onesignal.com/api/v1/notifications')
@@ -36,6 +37,7 @@ class TableCreationNotificationJob < ApplicationJob
                                     'Authorization' => "Basic #{ENV['ONESIGNAL_API_KEY']}")
       request.body = params.as_json.to_json
       response = http.request(request)
+      puts response.body
 
     end
 

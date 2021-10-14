@@ -9,6 +9,8 @@ class SessionsController < ApplicationController
     end
  
     def checkout
+
+        Stripe.api_key = ENV['STRIPE_API_KEY']
         session = Stripe::Checkout::Session.create({
           line_items: [{
             # TODO: replace this with the `price` of the product you want to sell
@@ -25,10 +27,11 @@ class SessionsController < ApplicationController
             'card',
           ],
           mode: 'payment',
-          success_url: YOUR_DOMAIN + '?success=true',
-          cancel_url: YOUR_DOMAIN + '?canceled=true',
+          success_url: 'http://localhost:3001/#/' + '?success=true',
+          cancel_url: 'http://localhost:3001/#/' + '?canceled=true',
         })
-        redirect session.url, 303
+
+        render json: {checkoutURL: session.url}
     end
 end 
   
