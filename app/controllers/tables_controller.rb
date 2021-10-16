@@ -2,6 +2,7 @@ class TablesController < ApplicationController
     before_action :set_restaurant, only: [:create, :destroy]
 
     def create
+       byebug
         @restaurant.tables.create(open: true, seating: Date.today)
     
         render json: @restaurant.tables
